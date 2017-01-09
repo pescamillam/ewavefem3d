@@ -1,0 +1,10 @@
+fea.JFEM: FE code. Data file: examples/example01/f.fem
+Date: 2016-08-11  Time: 20:35:37
+
+Number of elements    nEl = 2
+Number of nodes      nNod = 13
+Number of dimensions nDim = 2
+Memory for global matrix:    0.00 MB
+Loadstep 1
+
+Solution time =       0.02 s

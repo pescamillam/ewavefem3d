@@ -61,16 +61,21 @@ public class Window extends JFrame {
                     processor.process(reader, writer, file.getParentFile().getAbsolutePath());
                     logTextArea.append("\nNumero de nodos " + processor.getFem().nNod);
                     logTextArea.append("\nnodos ");
-
-//                    for (double[] a : Element.xy) {
-//                        logTextArea.append("\npos ");
-//                        
-//                        if (Element instanceof ElementQuad2D) {
-//                            for (double b : a) {
-//                                logTextArea.append(b + " ");
-//                            }
-//                        }
-//                    }
+                    
+                    System.out.println("Elements:");
+                    for (Element a : processor.getFem().elems) {
+                        for (int b : a.ind) {
+                            System.out.print(b + " ");
+                        }
+                        System.out.println();
+                    }
+                    System.out.println("Nodes:");
+                    for (double[] a : Element.xy) {
+                        for (double b : a) {
+                            System.out.print(b + " ");
+                        }
+                        System.out.println();
+                    }
                     writer.close();
                     logTextArea.append("\nTomó " + (System.nanoTime() - inicio)/1000000 + "ms");
                     logTextArea.append("\nArchivo generado ");

@@ -1,0 +1,4 @@
+# Mesh visualization
+  meshFile = examples/example04/hole3d.mesh
+end 
+
