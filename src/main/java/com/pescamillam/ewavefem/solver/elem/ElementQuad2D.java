@@ -1,5 +1,7 @@
 package com.pescamillam.ewavefem.solver.elem;
 
+import java.util.logging.Logger;
+
 import com.pescamillam.ewavefem.solver.main.GaussRule;
 import com.pescamillam.ewavefem.solver.material.Material;
 import com.pescamillam.ewavefem.solver.model.ElemFaceLoad;
@@ -7,6 +9,7 @@ import com.pescamillam.ewavefem.solver.model.FeModel;
 
 // 2D quadratic isoparametric element (4-8 nodes)
 public class ElementQuad2D extends Element {
+    private static final Logger LOGGER = Logger.getLogger("Window");
     // Element edges (local numbers)
     private static int[][] faceInd =
             {{0,1,2},{2,3,4},{4,5,6},{6,7,0}};
@@ -51,6 +54,7 @@ public class ElementQuad2D extends Element {
             LOGGER.info("Element material name: " + matName);
         }
         mat.elasticityMatrix(emat);
+        printMatrix(emat, "Elasticity matrix");
 
         // Gauss integration loop
         for (int ip = 0; ip < gk.nIntPoints; ip++) {
@@ -73,9 +77,24 @@ public class ElementQuad2D extends Element {
                 }
             }
         }
+        printMatrix(bmat, "B Matrix");
+        printMatrix(kmat, "Stiffness Matrix");
     }
 
-    // Set displacement differentiation matrix bmat.
+    private void printMatrix(double[][] matrix, String matrixName) {
+    	LOGGER.info(matrixName);
+        StringBuilder sb = new StringBuilder();
+        for (double i[] : kmat) {
+        	for (double j : i) {
+        		sb.append(j);
+        		sb.append(" ");
+        	}
+        	sb.append("\n");
+        }
+        LOGGER.info("\n"+sb.toString());
+	}
+
+	// Set displacement differentiation matrix bmat.
     // xi, et - local coordinates,
     // returns  determinant of Jacobian matrix
     private double setBmatrix(double xi, double et) {
