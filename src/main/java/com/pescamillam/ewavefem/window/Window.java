@@ -7,8 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -38,6 +42,8 @@ public class Window extends JFrame {
     private static final JTextArea logTextArea = new JTextArea("");
     private static final JScrollPane logTextAreaScroll = new JScrollPane(logTextArea);
     public static FemCanvas canvas;
+    private Properties properties = new Properties();
+    private File propertiesFile = new File("config.properties");
 
     public Window() throws IOException {
         JPanel panel = new JPanel();
@@ -46,11 +52,23 @@ public class Window extends JFrame {
         loadFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileSelector = new JFileChooser("/home/peter/Peter/projects/fem/examples/example02");
+                if (!propertiesFile.exists()) {
+                    saveFileProperty("/home/peter/Peter/projects/fem/examples/example02");
+                } else {
+                    try {
+                        FileInputStream fis = new FileInputStream(propertiesFile);
+                        properties.load(new FileInputStream(propertiesFile));
+                        fis.close();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                JFileChooser fileSelector = new JFileChooser(properties.getProperty("file"));
                 int returnVal = fileSelector.showOpenDialog(Window.this);
 
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fileSelector.getSelectedFile();
+                    saveFileProperty(file.getParent());
                     logTextArea.append("Archivo cargado: ");
                     logTextArea.append(file.getAbsolutePath());
                     LOGGER.info("Abriendo: " + file.getAbsolutePath());
@@ -69,12 +87,18 @@ public class Window extends JFrame {
                         }
                         System.out.println();
                     }
+                    
+                    int nodeCounter = 0;
                     System.out.println("Nodes:");
                     for (double[] a : Element.xy) {
+                        if (nodeCounter >= processor.getFem().nNod) {
+                            break;
+                        }
                         for (double b : a) {
                             System.out.print(b + " ");
                         }
                         System.out.println();
+                        nodeCounter++;
                     }
                     writer.close();
                     logTextArea.append("\nTomó " + (System.nanoTime() - inicio)/1000000 + "ms");
@@ -123,5 +147,19 @@ public class Window extends JFrame {
     protected void drawInitial(String absolutePath, FemCanvas canvas2) {
         File file = new File(absolutePath);
         
+    }
+    
+    private void saveFileProperty(String folder) {
+        try {
+            properties.setProperty("file", folder);
+            FileOutputStream fos;
+            fos = new FileOutputStream(propertiesFile); 
+            properties.store(fos, null);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
