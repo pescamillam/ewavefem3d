@@ -51,10 +51,10 @@ public class ElementQuad2D extends Element {
         // Material mat
         mat = fem.materials.get(matName);
         if (mat == null) {
-            LOGGER.info("Element material name: " + matName);
+            //LOGGER.info("Element material name: " + matName);
         }
         mat.elasticityMatrix(emat);
-        printMatrix(emat, "Elasticity matrix");
+        //printMatrix(emat, "Elasticity matrix");
 
         // Gauss integration loop
         for (int ip = 0; ip < gk.nIntPoints; ip++) {
@@ -77,8 +77,8 @@ public class ElementQuad2D extends Element {
                 }
             }
         }
-        printMatrix(bmat, "B Matrix");
-        printMatrix(kmat, "Stiffness Matrix");
+        //printMatrix(bmat, "B Matrix");
+        //printMatrix(kmat, "Stiffness Matrix");
     }
 
     private void printMatrix(double[][] matrix, String matrixName) {

@@ -80,26 +80,26 @@ public class Window extends JFrame {
                     logTextArea.append("\nNumero de nodos " + processor.getFem().nNod);
                     logTextArea.append("\nnodos ");
                     
-                    System.out.println("Elements:");
-                    for (Element a : processor.getFem().elems) {
-                        for (int b : a.ind) {
-                            System.out.print(b + " ");
-                        }
-                        System.out.println();
-                    }
+//                    System.out.println("Elements:");
+//                    for (Element a : processor.getFem().elems) {
+//                        for (int b : a.ind) {
+//                            System.out.print(b + " ");
+//                        }
+//                        System.out.println();
+//                    }
                     
                     int nodeCounter = 0;
-                    System.out.println("Nodes:");
-                    for (double[] a : Element.xy) {
-                        if (nodeCounter >= processor.getFem().nNod) {
-                            break;
-                        }
-                        for (double b : a) {
-                            System.out.print(b + " ");
-                        }
-                        System.out.println();
-                        nodeCounter++;
-                    }
+//                    System.out.println("Nodes:");
+//                    for (double[] a : Element.xy) {
+//                        if (nodeCounter >= processor.getFem().nNod) {
+//                            break;
+//                        }
+//                        for (double b : a) {
+//                            System.out.print(b + " ");
+//                        }
+//                        System.out.println();
+//                        nodeCounter++;
+//                    }
                     writer.close();
                     logTextArea.append("\nTomó " + (System.nanoTime() - inicio)/1000000 + "ms");
                     logTextArea.append("\nArchivo generado ");

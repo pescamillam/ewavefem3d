@@ -11,7 +11,7 @@ public class Writer {
     }
     
     public void write(String string) throws IOException {
-        System.out.print(string);
+        //System.out.print(string);
         fileWriter.write(string);
     }
     

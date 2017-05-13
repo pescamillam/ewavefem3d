@@ -14,8 +14,8 @@ public class Generator {
         FileWriter fileWriter = new FileWriter(file);
         Writer writer = new Writer(fileWriter);
         
-        int height = 2;
-        int width = 3;
+        int height = 4;
+        int width = 7;
         double maxY = 1;
         double maxX = 2;
         writer.write("nNod = " + (1 + 3 * width * height + 2 * height + 2 * width));
@@ -37,6 +37,7 @@ public class Generator {
         writer.write(" ");
         int lowerNode = 1;
         writer.write(lowerNode);
+        writer.write(" ");
         for (int i = 0; i < width; i++) {
             lowerNode+=(2*height+1);
             writer.write(lowerNode);
@@ -56,10 +57,15 @@ public class Generator {
                 "# Surface load: direction, element number, number of face\n" + 
                 "#    nodes, face node numbers, intensities  \n" + 
                 "  surForce = y ");
-        writer.write(width % 2 == 0 ? width * height / 2 : width * height / 2.0 + height / 2.0);
+        writer.write(width % 2 == 0 ? width * height / 2 : (int)(width * height / 2.0 + height / 2.0));
+        writer.write(" 3 ");
+        writer.write(width % 2 == 0 ? 3 * width * height / 2 + width - height - 2 : 3 * width * height / 2 + width + height / 2);
         writer.write(" ");
-        writer.write((width/2)*(2+3*height)+1 + 2*width);
-        writer.write(" 3 13 16 21  1 1 1\n" + 
+        writer.write(width % 2 == 0 ? 3 * width * height / 2 + width : 3 * width * height / 2 + width + 3 * height / 2 + 1);
+        writer.write(" ");
+        writer.write(width % 2 == 0 ? 3 * width * height / 2 + width + 2 * height + 1 : 3 * width * height / 2 + width + 7 * height / 2 + 2);
+        writer.write(" ");
+        writer.write(" 1 1 1\n" + 
                 "\n" + 
                 "\n" + 
                 "end");
