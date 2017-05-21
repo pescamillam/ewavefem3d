@@ -67,4 +67,20 @@ public class FemCanvas extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
         
     }
+    
+    public void drawPoint(int x, int y) {
+        Graphics g = img.getGraphics();
+        g.setColor(Color.MAGENTA);
+        g.fillOval(x, y, 3, 3);
+        g.dispose();
+        repaint();
+    }
+    
+    public void drawPoint2(int x, int y) {
+        Graphics g = img.getGraphics();
+        g.setColor(Color.blue);
+        g.fillOval(x, y, 3, 3);
+        g.dispose();
+        repaint();
+    }
 }

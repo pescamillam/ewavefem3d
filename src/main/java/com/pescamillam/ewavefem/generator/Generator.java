@@ -14,8 +14,8 @@ public class Generator {
         FileWriter fileWriter = new FileWriter(file);
         Writer writer = new Writer(fileWriter);
         
-        int height = 4;
-        int width = 7;
+        int height = 10;
+        int width = 13;
         double maxY = 1;
         double maxX = 2;
         writer.write("nNod = " + (1 + 3 * width * height + 2 * height + 2 * width));

@@ -13,22 +13,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
 import com.pescamillam.ewavefem.solver.elem.Element;
-import com.pescamillam.ewavefem.solver.elem.ElementQuad2D;
+import com.pescamillam.ewavefem.solver.model.FeLoad;
 import com.pescamillam.ewavefem.solver.processor.FemProcessor;
 import com.pescamillam.ewavefem.solver.reader.FeScanner;
 import com.pescamillam.ewavefem.solver.writer.FePrintWriter;
@@ -88,7 +85,7 @@ public class Window extends JFrame {
 //                        System.out.println();
 //                    }
                     
-                    int nodeCounter = 0;
+//                    int nodeCounter = 0;
 //                    System.out.println("Nodes:");
 //                    for (double[] a : Element.xy) {
 //                        if (nodeCounter >= processor.getFem().nNod) {
@@ -106,7 +103,7 @@ public class Window extends JFrame {
                     logTextArea.append(file.getAbsolutePath() + ".out\n");
                     LOGGER.info("Archivo procesado " + file.getParentFile().getAbsolutePath());
                     canvas.clearImage();
-                    drawInitial(file.getAbsolutePath(), canvas);
+                    drawInitial(file.getAbsolutePath(), canvas, Element.xy, processor);
                 } else {
                     LOGGER.info("Open command cancelled by user.");
                 }
@@ -144,8 +141,25 @@ public class Window extends JFrame {
         this.setSize(500, 600);
     }
 
-    protected void drawInitial(String absolutePath, FemCanvas canvas2) {
+    protected void drawInitial(String absolutePath, FemCanvas canvas2, double[][] xy, FemProcessor processor) {
         File file = new File(absolutePath);
+        System.out.println("Nodes:");
+        int nodeCounter = 0;
+        System.out.println("nNod: " + processor.getFem().nNod);
+        for (int i = 0; i < processor.getFem().nNod; i++) {
+            if (nodeCounter >= processor.getFem().nNod) {
+                break;
+            }
+            for (int j = 0; j < processor.getFem().nDim; j++) {
+                System.out.print(processor.getFem().xyz[i*2+j] + " ");
+                
+            }
+            canvas2.drawPoint((int)(processor.getFem().xyz[i*2]*100+5), (int)(processor.getFem().xyz[i*2+1]*100+5));
+            canvas2.drawPoint2((int)((processor.getFem().xyz[i*2]+FeLoad.sDispl[i*2])*100+5), (int)((processor.getFem().xyz[i*2+1]+FeLoad.sDispl[i*2+1])*100+5));
+            System.out.println();
+            nodeCounter++;
+        }
+        
         
     }
     

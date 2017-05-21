@@ -30,7 +30,7 @@ public class FeModelData {
     // Materials
     public HashMap<String, Material> materials = new HashMap<String, Material>();
     // Coordinates of nodes
-    private double xyz[];
+    public double xyz[];
     // Constrained degrees of freedom
     public  LinkedList<Dof> defDs = new LinkedList<Dof>();
     public boolean thermalLoading;

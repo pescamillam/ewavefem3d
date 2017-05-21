@@ -31,7 +31,7 @@ public class FeLoadData {
     // Displacement increment
     static double[] dDispl;
     // Total displacements
-    static double[] sDispl;
+    public static double[] sDispl;
     // Right-hand side of global equation system
     public static double[] RHS;
 
